@@ -2,7 +2,7 @@
   Created By: Divan Visagie
   Created On: 2013/06/12
   License: MIT
-  Version: 0.0.1
+  Version: 0.0.2
 */
 
 var webdb = {};
