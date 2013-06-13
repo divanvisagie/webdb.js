@@ -1,16 +1,78 @@
 <!-- 
-	Test Page:
-
-	This page is used for testing purposes
+	Creted By: Divan Visagie
  -->
 <!DOCTYPE html>
-
 <html>
 	<head>
-		<script src="webdb.js">
-		</script>
+
+
+		<!-- Bootstrap + font-awesome -->
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<!-- <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+		<script src="jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.js"></script>
+
+		<!-- CodeMirror -->
+		<script src="codemirror/lib/codemirror.js"></script>
+		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+		<script src="codemirror/mode/javascript/javascript.js"></script>
+		<link rel="stylesheet" href="solarized.css"> <!-- Solarized theme -->
+
+
+		<link href="main.css" rel="stylesheet" type="text/css">
+		
 	</head>
 	<body>
-		Webdb test page
+
+		<!-- Create Navbar -->
+		<div class="navbar navbar-fixed-top navbar-inverse">
+			<div class="navbar-inner">
+
+			</div>
+		</div>
+
+		<!-- Create workspace layout -->
+		<div class="container-fluid workspace">
+			<div class="row-fluid workspace">
+				<div class="span2 sidebar">
+					<!--Sidebar content-->
+				</div>
+				<div class="span10">
+					<!--Body content-->
+					<textarea id="code" name="code" style="display: none;">
+					console.log( 'test' );
+					</textarea>
+
+					<div class="output">
+						Output goes here
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+
+		<!-- Bring in scripts -->
+		<script src="webdb.js"></script>
+		<script>
+
+
+			var editor = CodeMirror.fromTextArea(document.querySelector('#code'), {
+				lineNumbers: true,
+				theme : 'solarized dark'
+			});
+
+			function attachTextListener(input, func) {
+			    if (window.addEventListener) {
+			        input.addEventListener( 'input' , func, false);
+			    } else
+			        input.attachEvent( 'onpropertychange', function() {
+			        func.call(input);
+			    });
+			}
+
+		</script>
 	</body>
 </html>

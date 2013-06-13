@@ -1,0 +1,39 @@
+html{
+
+	height:100%;
+}
+body{
+
+	background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAABFFUlE…a9bnBq3fEVltKfO5IaSTmGjjc4J0otcP7QsJUSQM8pEj5/wCuUuC2DWz8AAAAAElFTkSuQmCC");
+	/*background-color: black;*/
+	height:100%;
+	margin-top: 41px;
+	padding-bottom: -41px;
+	margin-bottom: -41px;
+}
+
+.sidebar{
+
+	background: black;
+}
+
+.output{
+
+	background: grey;
+	height: 30%;
+}
+
+.workspace{
+
+	height: 100%;
+}
+
+.span10{
+
+	height: 100%;
+}
+
+.CodeMirror{
+
+	height: 70%;
+}
