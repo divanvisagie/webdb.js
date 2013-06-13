@@ -1,3 +1,8 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+    margin:0;
+    padding:0;
+}
+
 html{
 
 	height:100%;
@@ -7,9 +12,33 @@ body{
 	background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAABFFUlE…a9bnBq3fEVltKfO5IaSTmGjjc4J0otcP7QsJUSQM8pEj5/wCuUuC2DWz8AAAAAElFTkSuQmCC");
 	/*background-color: black;*/
 	height:100%;
-	margin-top: 41px;
-	padding-bottom: -41px;
-	margin-bottom: -41px;
+	width: 100%;
+	margin:auto;
+}
+
+
+.navbar , .navbar-inner{
+  
+  border-radius:0;
+  padding:0;
+  margin:0;
+}
+
+.wrap{
+
+	/*padding-top: 41px;*/
+	/*display: table;*/
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	
+}
+
+.wrap-cell{
+
+	width:100%;
+	/*display: table-cell;*/
 }
 
 .sidebar{
@@ -20,20 +49,22 @@ body{
 .output{
 
 	background: grey;
-	height: 30%;
+	/*max-height: 30%;
+	min-height: 20%;*/
+	height: auto;
+	margin: auto;
+	margin-bottom: 0;
 }
 
-.workspace{
 
-	height: 100%;
-}
 
 .span10{
 
 	height: 100%;
+	/*display: table-cell;*/
 }
 
 .CodeMirror{
 
-	height: 70%;
+	//height: 70%;
 }
