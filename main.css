@@ -1,0 +1,59 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+    margin:0;
+    padding:0;
+}
+
+html{
+
+	height:100%;
+}
+body{
+
+	/*background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAABFFUlE…a9bnBq3fEVltKfO5IaSTmGjjc4J0otcP7QsJUSQM8pEj5/wCuUuC2DWz8AAAAAElFTkSuQmCC");*/
+	/*background-color: black;*/
+	height:100%;
+	width: 100%;
+	margin:auto;
+}
+
+.hfill{
+
+	height:calc(100% - 42px);
+}
+
+.navbar , .navbar-inner{
+
+	border-radius: 0;
+}
+
+.row , .row > div{
+  
+  margin:0;
+}
+
+.side{
+  
+  width:25%;
+  height:100%;
+  background:#555;
+}
+
+.code{
+  
+  width:75%;
+  height:70%;
+  background:blue;
+}
+
+.code > div{
+
+	height:100%;
+}
+
+.output{
+  
+  width:75%;
+  height:30%;
+  background:grey;
+  
+}

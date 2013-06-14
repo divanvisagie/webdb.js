@@ -1,16 +1,67 @@
 <!-- 
-	Test Page:
-
-	This page is used for testing purposes
+	Creted By: Divan Visagie
  -->
 <!DOCTYPE html>
-
 <html>
 	<head>
-		<script src="webdb.js">
-		</script>
+
+
+		<!-- Bootstrap + font-awesome -->
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+		<script src="jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.js"></script>
+
+		<!-- CodeMirror -->
+		<script src="codemirror/lib/codemirror.js"></script>
+		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+		<script src="codemirror/mode/javascript/javascript.js"></script>
+		<link rel="stylesheet" href="solarized.css"> <!-- Solarized theme -->
+
+
+		<link href="main.css" rel="stylesheet" type="text/css">
+		
 	</head>
 	<body>
-		Webdb test page
+
+		<!-- Create Navbar as first layout row-->
+		<div class="navbar navbar-inverse row">
+			<div class="navbar-inner">
+				<button id="run" class="btn btn-inverse pull-right">Run  &nbsp;<div style="color: rgb(50, 207, 50); text-shadow: 0px 0px 9px rgb(79, 201, 79);" class="icon-play"></div>  </button>
+			</div>
+		</div>
+
+		<!--  -->
+
+
+		<div class="row show-grid hfill">
+			<div class="side span">Side stuff</div>
+			<div class="code span row">
+				<textarea id="code" name="code" style="display: none; height:100%;">
+DROP TABLE IF EXISTS test;
+CREATE TABLE IF NOT EXISTS test( id INTEGER PRIMARY KEY, name TEXT );
+
+INSERT INTO test VALUES( 1 , "John" );
+INSERT INTO test VALUES( 2 , "Jack" );
+
+SELECT * FROM test;
+
+SELECT * FROM test WHERE id = 1;</textarea>
+			</div>
+
+			<div id="output" class="output span row">
+				
+			</div>
+		</div>
+	
+		
+		
+		
+
+		<!-- Bring in scripts -->
+		<script src="webdb.js"></script>
+		<script src="main.js"></script>
 	</body>
 </html>
