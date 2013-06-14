@@ -61,6 +61,8 @@ $( '#run' ).on( 'click' , function(){
 
 	var codeText = editor.getValue(); /* Get the full code text */
 
+	$( '#output' ).html('');
+
 
 	var lines = codeText.split('\n');
 	console.log( 'processing' ,  lines );

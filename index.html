@@ -38,10 +38,11 @@
 			<div class="code span row">
 				<textarea id="code" name="code" style="display: none; height:100%;">
 DROP TABLE IF EXISTS test;
-CREATE TABLE IF NOT EXISTS test( id INTEGER PRIMARY KEY, name TEXT );
+CREATE TABLE IF NOT EXISTS test( id INTEGER PRIMARY KEY, name TEXT, surname TEXT , email TEXT );
 
-INSERT INTO test VALUES( 1 , "John" );
-INSERT INTO test VALUES( 2 , "Jack" );
+INSERT INTO test VALUES( 1 , "John" , "Smith" , "john@smith.com" );
+INSERT INTO test VALUES( 2 , "Jack" , "Carver" , "jackc@farcry.de" );
+INSERT INTO test VALUES( 3 , "James" , "May" , "may@manlab.com" );
 
 SELECT * FROM test;
 
