@@ -54,6 +54,7 @@ body{
   
   width:75%;
   height:30%;
-  background:grey;
+  /*background:grey;*/
+  overflow: scroll;
   
 }

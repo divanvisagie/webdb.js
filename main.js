@@ -13,6 +13,50 @@ function attachTextListener(input, func) {
     });
 }
 
+
+
+/* creates a table from a json array */
+function tblWithJSONArr( jsonArr ){
+
+	//console.log( headings );
+
+	var table = document.createElement( 'table' );
+	table.className = 'table table-bordered';
+
+	var head = document.createElement( 'thead' );
+	table.appendChild( head );
+
+	/* get table headings */
+	console.log( 'table with:' , jsonArr );
+
+	var hrow = document.createElement( 'tr' );
+	for ( var j in jsonArr[0] ){
+
+		hrow.innerHTML += '<td>' + j + '</td>';
+	}
+
+	head.appendChild( hrow );
+
+	/* table body */
+	var tbody = document.createElement( 'tbody' );
+
+	for ( var i in jsonArr ){
+
+		var brow = document.createElement( 'tr' );
+		for ( var k in jsonArr[i] ){
+
+			brow.innerHTML += '<td>' + jsonArr[i][k] + '</td>';
+		}
+		tbody.appendChild( brow );
+	}
+
+	table.appendChild( tbody );
+
+	return table;
+
+}
+
+
 $( '#run' ).on( 'click' , function(){
 
 	var codeText = editor.getValue(); /* Get the full code text */
@@ -40,9 +84,13 @@ $( '#run' ).on( 'click' , function(){
 				output.push( res );
 
 				var oElement = $( '#output' );
-				oElement.html( oElement.html() + JSON.stringify(res) + '<br/>' );
+				//oElement.html( oElement.html() + JSON.stringify(res) + '<br/>' );
 
-				console.log( '}}-->>' , res );
+				var tbl = tblWithJSONArr( res );
+
+
+				$( '#output' ).append( tbl );
+				console.log("-->",tbl);
 			} );
 
 		} else { //its just an execution
@@ -52,8 +100,4 @@ $( '#run' ).on( 'click' , function(){
 
 		}
 	}
-
-	
-
-
 } );
