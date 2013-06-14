@@ -32,7 +32,7 @@ function tblWithJSONArr( jsonArr ){
 	var hrow = document.createElement( 'tr' );
 	for ( var j in jsonArr[0] ){
 
-		hrow.innerHTML += '<td>' + j + '</td>';
+		hrow.innerHTML += '<th>' + j + '</th>';
 	}
 
 	head.appendChild( hrow );
