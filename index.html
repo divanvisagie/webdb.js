@@ -26,35 +26,37 @@
 	</head>
 	<body>
 
-		<div class="wrap"> <!-- Yes, that is a joke -->
-
-			<!-- Create Navbar -->
-			<div class="navbar navbar-inverse wrap-cell">
-				<div class="navbar-inner">
-					<button class="btn btn-inverse pull-right">Run  &nbsp;<div style="color: rgb(50, 207, 50); text-shadow: 0px 0px 9px rgb(79, 201, 79);" class="icon-play"></div>  </button>
-				</div>
+		<!-- Create Navbar as first layout row-->
+		<div class="navbar navbar-inverse row">
+			<div class="navbar-inner">
+				<button id="run" class="btn btn-inverse pull-right">Run  &nbsp;<div style="color: rgb(50, 207, 50); text-shadow: 0px 0px 9px rgb(79, 201, 79);" class="icon-play"></div>  </button>
 			</div>
-
-			<!-- <div style="width:100%; height:42px; background:salmon;"></div> -->
-
-			<!-- Create wrap layout -->
-			<div class="container-fluid wrap-cell">
-				<div class="row-fluid">
-					<div class="span2 sidebar">
-						<!--Sidebar content-->
-					</div>
-					<div class="span10">
-						<!--Body content-->
-						<textarea id="code" name="code" style="display: none;">SELECT * FROM test WHERE ID = 1</textarea>
-
-						<div class="output">
-							Output goes here
-						</div>
-					</div>
-				</div>
-			</div>
-
 		</div>
+
+		<!--  -->
+
+
+		<div class="row show-grid hfill">
+			<div class="side span">Side stuff</div>
+			<div class="code span row">
+				<textarea id="code" name="code" style="display: none; height:100%;">
+DROP TABLE IF EXISTS test;
+CREATE TABLE IF NOT EXISTS test( id INTEGER PRIMARY KEY, name TEXT );
+
+INSERT INTO test VALUES( 1 , "John" );
+INSERT INTO test VALUES( 2 , "Jack" );
+
+SELECT * FROM test;
+
+SELECT * FROM test WHERE id = 1;</textarea>
+			</div>
+
+			<div id="output" class="output span row">
+				
+			</div>
+		</div>
+	
+		
 		
 		
 
