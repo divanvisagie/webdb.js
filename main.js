@@ -13,6 +13,16 @@ function attachTextListener(input, func) {
     });
 }
 
+function refreshSideBar(){
+
+	webdb.getSchema( function ( rs ){
+
+		loadDbTree( webdb.dbDetails.name , rs );
+
+	} );
+}
+
+refreshSideBar();
 
 
 /* creates a table from a json array */
@@ -22,6 +32,7 @@ function tblWithJSONArr( jsonArr ){
 
 	var table = document.createElement( 'table' );
 	table.className = 'table table-bordered';
+	table.style['background-color'] = 'white';
 
 	var head = document.createElement( 'thead' );
 	table.appendChild( head );
@@ -57,11 +68,21 @@ function tblWithJSONArr( jsonArr ){
 }
 
 
+/* Handle click events */
+$( '#dbNameButton' ).on( 'click' , function( ev ){
+
+	webdb.use( $( '#dbName' ).val() );
+	refreshSideBar();
+} );
+
+
+
 $( '#run' ).on( 'click' , function(){
 
 	var codeText = editor.getValue(); /* Get the full code text */
 
-	$( '#output' ).html('');
+	$( '#outputTab' ).html( '<li><a href="#home">Output</a></li>' );
+	$( '#outputTabContent' ).html( '<div class="tab-pane" id="home"></div>' );
 
 
 	var lines = codeText.split('\n');
@@ -76,30 +97,46 @@ $( '#run' ).on( 'click' , function(){
 	*/
 
 	var output = [];
+	var count = 0;
+	var transaction_handler = function( res ){
 
-	for ( var k in lines ){
+		output.push( res );
+
+		var oElement = $( '#output' );
+		//oElement.html( oElement.html() + JSON.stringify(res) + '<br/>' );
+
+		var tbl = tblWithJSONArr( res );
+
+
+		console.log( '____' , count++ );
+
+		var tabs = document.querySelector( '#outputTab' );
+		tabs.innerHTML +=   '<li><a href="#r'+ count +'">Result ' + count + '</a></li>';
+
+		var tabContent = document.querySelector( '#outputTabContent' );
+		tabContent.innerHTML += '<div class="tab-pane" id="r'+ count +'">' + '</div>';
+
+		$( '#r' + count ).append( tbl );
+
+		/* refresher script */
+		$('#outputTab a').click(function (e) {
+						e.preventDefault();
+						$(this).tab('show');
+					});
+
+
+		console.log("-->",tbl);
+	};
+
+	for (var k in lines ){
 
 		if ( lines[k].toUpperCase().indexOf( 'SELECT' ) > -1 ){ //its probably a select
 
-			webdb.executeTransaction( lines[k] , [] , function( res ){
-
-				output.push( res );
-
-				var oElement = $( '#output' );
-				//oElement.html( oElement.html() + JSON.stringify(res) + '<br/>' );
-
-				var tbl = tblWithJSONArr( res );
-
-
-				$( '#output' ).append( tbl );
-				console.log("-->",tbl);
-			} );
+			webdb.executeTransaction( lines[k] , [] , transaction_handler );
 
 		} else { //its just an execution
 
-
 			webdb.execute( lines[k] );
-
 		}
 	}
 } );

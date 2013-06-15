@@ -33,14 +33,18 @@ body{
 
 .side{
   
-  width:25%;
+  width:20%;
   height:100%;
-  background:#555;
+  background:#ddd;
+  border-right: 2px #073642 solid;
+  /*padding: 20px;*/
+  box-sizing: border-box;
+  overflow: scroll;
 }
 
 .code{
   
-  width:75%;
+  width:80%;
   height:70%;
   background:blue;
 }
@@ -52,9 +56,33 @@ body{
 
 .output{
   
-  width:75%;
+  width:80%;
   height:30%;
   /*background:grey;*/
   overflow: scroll;
-  
+  /*background-color: #002b36;*/
+  background-color: #eee;
+}
+
+.output > .nav-tabs{
+  position: fixed;
+    /*background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAABFFUlE…a9bnBq3fEVltKfO5IaSTmGjjc4J0otcP7QsJUSQM8pEj5/wCuUuC2DWz8AAAAAElFTkSuQmCC");*/
+
+  /*background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAABFFUlE…a9bnBq3fEVltKfO5IaSTmGjjc4J0otcP7QsJUSQM8pEj5/wCuUuC2DWz8AAAAAElFTkSuQmCC");*/
+background-color: #073642;
+width: 100%;
+
+}
+
+.output > .tab-content{
+
+  padding: 50px;
+}
+
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
+color: #555;
+cursor: default;
+background-color: #eee;
+border: 1px solid #ddd;
+border-bottom-color: transparent;
 }
