@@ -17,7 +17,26 @@ function refreshSideBar(){
 
 	webdb.getSchema( function ( rs ){
 
-		loadDbTree( webdb.dbDetails.name , rs );
+
+		/* filter the schema data so that the sidebar looks better */
+		var tables = {};
+		var other = {};
+
+		for ( var i in rs ){
+
+			if ( rs[i].type === 'table' )
+				tables[ rs[i].tableName ] = rs[i];
+			else
+				other[ rs[i].tableName ] = rs[i];
+		}
+
+		var obj = {
+
+			Tables : tables,
+			Other : other
+		};
+
+		loadDbTree( webdb.dbDetails.name , obj );
 
 	} );
 }
@@ -120,9 +139,9 @@ $( '#run' ).on( 'click' , function(){
 
 		/* refresher script */
 		$('#outputTab a').click(function (e) {
-						e.preventDefault();
-						$(this).tab('show');
-					});
+			e.preventDefault();
+			$(this).tab('show');
+		});
 
 
 		console.log("-->",tbl);

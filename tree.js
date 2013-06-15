@@ -1,39 +1,23 @@
-$(function () {
-    $('.tree li').hide();
-    $('.tree li:first').show();
-    $('.tree li').on('click', function (e) {
-        var children = $(this).find('> ul > li');
-        if (children.is(":visible")) children.hide('fast');
-        else children.show('fast');
-        e.stopPropagation();
-    });
-});
 
-function tree(data) {    
-    if (typeof(data) == 'object') {        
-       
-       var ostring = '<ul>\n';
-      
+function tree(data) {
+
+     var ostring = '<ul>\n';
+    if (typeof(data) == 'object') {
+
       for ( var x in data ){
-      
+
         ostring += '<li> <a href="#">'+ x +'</a>' +  tree(data[x])+ ' </li>\n';
       }
-      
+
        ostring += '</ul>';
-      
+
       return ostring;
-      
-    } else {       
-           var ostring = '<ul>\n';
-      
-     
-      
+
+    } else {
+
         ostring += '<li> <a href="#">'+ data +'</a>'+ ' </li>\n';
-     
-      
-       ostring += '</ul>';
-      
-      return ostring;
+        ostring += '</ul>';
+        return ostring;
     }
 }
 
@@ -47,13 +31,21 @@ function loadDbTree( name , dbObject ){
 
   $('#tree').html( t );
    //$( 'body' ).append( holder );
-   
 
-  //console.log( tree );
-  //$( '#sidebar' ).html('');
- // $( '#sidebar' ).append( holder );
+
+   $(function () {
+    $('.tree li').hide();
+    $('.tree li:first').show();
+    $('.tree li').on('click', function (e) {
+        var children = $(this).find('> ul > li');
+        if (children.is(":visible")) children.hide('fast');
+        else children.show('fast');
+        e.stopPropagation();
+    });
+});
+
 
 }
 
 
-loadDbTree( 'database' , [{ dude: "where" , "thing" : { "name" : "yo" } }, {my : "car"}] );
+//loadDbTree( 'database' , [{ dude: "where" , "thing" : { "name" : "yo" } }, {my : "car"}] );
