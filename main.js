@@ -1,8 +1,5 @@
 require( ['tree'] , function( tree ){
 
-	//tree = tr;
-
-
 	var editor = CodeMirror.fromTextArea( document.querySelector( '#code' ), {
 		lineNumbers: true,
 		theme : 'solarized dark'
