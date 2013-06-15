@@ -30,22 +30,25 @@ function loadDbTree( name , dbObject ){
   var t =  tree( obj );
 
   $('#tree').html( t );
-   //$( 'body' ).append( holder );
-
 
    $(function () {
-    $('.tree li').hide();
-    $('.tree li:first').show();
-    $('.tree li').on('click', function (e) {
-        var children = $(this).find('> ul > li');
-        if (children.is(":visible")) children.hide('fast');
-        else children.show('fast');
-        e.stopPropagation();
-    });
-});
+      $('.tree li').hide();
+      $('.tree li:first').show();
+      $('.tree li').on('click', function (e) {
+          var children = $(this).find('> ul > li');
+          if (children.is(":visible")) children.hide('fast');
+          else children.show('fast');
+          e.stopPropagation();
+      });
+  });
 
 
 }
+
+define( 'tree' , function(){
+  return { loadDbTree : loadDbTree };
+} );
+
 
 
 //loadDbTree( 'database' , [{ dude: "where" , "thing" : { "name" : "yo" } }, {my : "car"}] );

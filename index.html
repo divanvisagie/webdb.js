@@ -5,12 +5,14 @@
 <html>
 	<head>
 
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 		<!-- Bootstrap + font-awesome -->
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+		<!-- <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
 		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
-		<script src="jquery.min.js"></script>
+		<script src="jquery.js"></script>
 		<script src="bootstrap/js/bootstrap.js"></script>
 
 		<!-- CodeMirror -->
@@ -40,23 +42,24 @@
 
 
 		<div class="row show-grid hfill">
-			<div id="sidebar" class="side span">
+			<div id="sidebar" class="side span" >
 
 				<div class="navbar" >
 					<div class="navbar-inner">
 						<div class="navbar-form ">
-							<div class="input-append">
-								<input style="width:auto;" class="" id="dbName" type="text" placeholder="Database name" value="myDb"/>
+							<div class="">
+								<input style="width:auto; min-width: 30px; max-width: 40%;" class="" id="dbName" type="text" placeholder="Database name" value="myDb"/>
 								<button class="btn" id="dbNameButton">Select</button>
-								<button class="btn" onclick="refreshSideBar()">  <div class="icon-refresh"></div> </button>
+								<button class="btn" id="dbRefresh">  <div class="icon-refresh"></div> </button>
 							</div>
 						</div>
 
 					</div>
 				</div>
 
-				<div id="tree" class="tree"></div>
-
+				<div>
+					<div id="tree" class="tree" ></div>
+				</div>
 			</div>
 			<div class="code span row">
 				<textarea id="code" name="code" style="display: none; height:100%;">
@@ -82,10 +85,10 @@ SELECT * FROM test WHERE id = 1;</textarea>
 				<div id="outputTabContent" class="tab-content">
 					<div class="tab-pane" id="home">
 
-						Error/Success list goes here
+					
 
-						<table class="table">
-							<tr class="success">
+						<table id="outputTable" class="table">
+						<!-- 	<tr class="success">
 					    		<td> Success</td>
 					  		</tr>
 					  		<tr class="warning">
@@ -93,13 +96,15 @@ SELECT * FROM test WHERE id = 1;</textarea>
 					  		</tr>
 					  		<tr class="error">
 					    		<td> Error</td>
-					  		</tr>
+					  		</tr> -->
 					  	</table>
 
 					</div>
 				</div>
 				 
 				<script>
+
+					$('#outputTab a[href="#home"]').tab('show');
 
 					$('#outputTab a').click(function (e) {
 						e.preventDefault();
@@ -112,9 +117,11 @@ SELECT * FROM test WHERE id = 1;</textarea>
 		</div>
 
 		<!-- Bring in scripts -->
-		<script src="tree.js"></script>
+		<!-- <script src="tree.js"></script> -->
 		<script src="webdb.js"></script>
-		<script src="main.js"></script>
+
+		<!--  require js -->
+		<script data-main="main" src="require.js"></script>
 
 	</body>
 </html>
