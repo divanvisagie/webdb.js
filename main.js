@@ -117,7 +117,7 @@ require( ['tree'] , function( tree ){
 	/* Handle click events */
 	$( '#dbNameButton' ).on( 'click' , function( ev ){
 
-		//webdb.use( $( '#dbName' ).val() );
+		webdb.use( $( '#dbName' ).val() );
 		refreshSideBar();
 	} );
 
