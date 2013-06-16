@@ -1,7 +1,14 @@
+<<<<<<< HEAD
+/*
+	Created By: Divan Visagie
+*/
+=======
 require( ['tree' , 'sqlParser'] , function( tree , sqlParser ){
 
 	//tree = tr;
+>>>>>>> master
 
+require( ['tree'] , function( tree ){
 
 	var editor = CodeMirror.fromTextArea( document.querySelector( '#code' ), {
 		lineNumbers: true,

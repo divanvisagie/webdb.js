@@ -62,10 +62,12 @@ body{
   overflow: scroll;
   /*background-color: #002b36;*/
   background-color: #eee;
+
 }
 
 .output > .nav-tabs{
   position: fixed;
+
     /*background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAABFFUlE…a9bnBq3fEVltKfO5IaSTmGjjc4J0otcP7QsJUSQM8pEj5/wCuUuC2DWz8AAAAAElFTkSuQmCC");*/
 
   /*background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAABFFUlE…a9bnBq3fEVltKfO5IaSTmGjjc4J0otcP7QsJUSQM8pEj5/wCuUuC2DWz8AAAAAElFTkSuQmCC");*/
@@ -76,6 +78,7 @@ width: 100%;
 
 .output > .tab-content{
 
+   padding-top: 50px;
   /*padding: 50px;*/
 }
 
