@@ -1,4 +1,4 @@
-require( ['tree'] , function( tree ){
+require( ['tree' , 'sqlParser'] , function( tree , sqlParser ){
 
 	//tree = tr;
 
@@ -9,12 +9,13 @@ require( ['tree'] , function( tree ){
 	});
 
 	function attachTextListener(input, func) {
-	    if (window.addEventListener) {
-	        input.addEventListener( 'input' , func, false);
-	    } else
-	        input.attachEvent( 'onpropertychange', function() {
-	        func.call(input);
-	    });
+
+		if (window.addEventListener) {
+			input.addEventListener( 'input' , func, false);
+		} else
+			input.attachEvent( 'onpropertychange', function() {
+			func.call(input);
+		});
 	}
 
 	function refreshSideBar(){
@@ -54,13 +55,6 @@ require( ['tree'] , function( tree ){
 				obj.Indexes = indexes;
 			if ( otherCount > 0 )
 				obj.Other = other;
-
-			// var obj = {
-
-			// 	Tables : tables,
-			// 	Indexes : indexes,
-			// 	Other : other
-			// };
 
 			tree.loadDbTree( webdb.dbDetails.name , obj );
 
@@ -131,12 +125,13 @@ require( ['tree'] , function( tree ){
 
 		var codeText = editor.getValue(); /* Get the full code text */
 
+		/* remove all the old stuff */
 		$( '#outputTab' ).html( '<li><a href="#home">Output</a></li>' );
 		$( '#outputTable' ).html( '' );
+		$( '#outputTabContent' ).children( 'div:not(:first)' ).remove(); //removes all except first child
 
 
-		var lines = codeText.split('\n');
-		console.log( 'processing' ,  lines );
+		var lines = sqlParser.getLines( codeText );
 
 		webdb.open();
 
@@ -148,9 +143,9 @@ require( ['tree'] , function( tree ){
 
 		var err_handler = function( res ){
 
+			var row = document.createElement( 'tr' );
 			if ( res.hasOwnProperty( 'error' ) ){
 
-				var row = document.createElement( 'tr' );
 				row.className = 'error';
 
 				row.innerHTML += '<td>' + this.query + '</td> <td>'+ res.error.message +'</td>';
@@ -163,7 +158,6 @@ require( ['tree'] , function( tree ){
 
 				console.log(  'yeah dawg' );
 
-				var row = document.createElement( 'tr' );
 				row.className = 'success';
 
 				row.innerHTML += '<td>' + this.query + '</td> <td>'+ 'Command Executed successfully' +'</td>';
@@ -179,9 +173,9 @@ require( ['tree'] , function( tree ){
 		var count = 0;
 		var transaction_handler = function( res ){
 
+			var row = document.createElement( 'tr' );
 			if ( res.hasOwnProperty( 'error' ) ){
 
-				var row = document.createElement( 'tr' );
 				row.className = 'error';
 
 				row.innerHTML += '<td>' + this.query + '</td> <td>'+ res.error.message +'</td>';
@@ -191,10 +185,8 @@ require( ['tree'] , function( tree ){
 				return;
 			}else {
 
-
 				console.log(  'yeah dawg' );
 
-				var row = document.createElement( 'tr' );
 				row.className = 'success';
 
 				row.innerHTML += '<td>' + this.query + '</td> <td>'+ 'Command Executed successfully' +'</td>';
@@ -206,7 +198,6 @@ require( ['tree'] , function( tree ){
 			output.push( res );
 
 			var oElement = $( '#output' );
-			//oElement.html( oElement.html() + JSON.stringify(res) + '<br/>' );
 
 			var tbl = tblWithJSONArr( res );
 
