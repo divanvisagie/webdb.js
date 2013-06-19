@@ -1,3 +1,6 @@
+/*
+	Created By: Divan Visagie
+*/
 require( ['tree' , 'sqlParser'] , function( tree , sqlParser ){
 
 	//tree = tr;
@@ -115,7 +118,7 @@ require( ['tree' , 'sqlParser'] , function( tree , sqlParser ){
 		refreshSideBar();
 	} );
 
-	$( '#dbRefreshButton' ).on( 'click' , refreshSideBar );
+	$( '#dbRefresh' ).on( 'click' , refreshSideBar );
 
 
 
