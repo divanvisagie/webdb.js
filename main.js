@@ -3,9 +3,6 @@
 */
 require( ['tree' , 'sqlParser'] , function( tree , sqlParser ){
 
-	//tree = tr;
-
-
 	var editor = CodeMirror.fromTextArea( document.querySelector( '#code' ), {
 		lineNumbers: true,
 		theme : 'solarized dark'
@@ -120,6 +117,43 @@ require( ['tree' , 'sqlParser'] , function( tree , sqlParser ){
 
 	$( '#dbRefresh' ).on( 'click' , refreshSideBar );
 
+
+	$( '#file-open' ).on( 'click', function(){
+
+		if (window.File && window.FileReader && window.FileList && window.Blob) { //supported?
+
+			/* create input element and trigger file open */
+			var inp = document.createElement( 'input' );
+			inp.type = 'file';
+			$( inp ).trigger( 'click' );
+
+			$( inp ).on( 'change' , function( ev ){
+
+				//var oEvent = ev.originalEvent;
+
+				var files = ev.originalEvent.target.files;
+
+				var file = files[0];
+
+				var reader = new FileReader();
+
+				reader.onload = function( e ){
+
+					var content = e.target.result;
+
+					console.log( content );
+
+					editor.setValue( content );
+				};
+
+				reader.readAsText( file );
+
+			} );
+
+		} else {
+			alert('The File APIs are not fully supported in this browser.');
+		}
+	} );
 
 
 	$( '#run' ).on( 'click' , function(){

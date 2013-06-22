@@ -5,6 +5,8 @@
 <html>
 	<head>
 
+		<title>Web SQL Query Browser</title>
+
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 		<!-- Bootstrap + font-awesome -->
@@ -33,7 +35,19 @@
 		<!-- Create Navbar as first layout row-->
 		<div class="navbar navbar-inverse row">
 			<div class="navbar-inner">
-				<div class="brand">Web SQL Query Browser</div>
+				<div class="btn-group">
+					<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+						File
+						<span class="icon-file"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<!-- dropdown menu links -->
+						<li id="file-open"><a tabindex="-1" href="#">Open</a></li>
+					</ul>
+				</div>
+
+
+				<!-- <div class="brand">Web SQL Query Browser</div> -->
 				<button id="run" class="btn btn-inverse pull-right">Run  &nbsp;<div style="color: rgb(50, 207, 50); text-shadow: 0px 0px 9px rgb(79, 201, 79);" class="icon-play"></div>  </button>
 			</div>
 		</div>
