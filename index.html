@@ -98,8 +98,8 @@ SELECT * FROM test WHERE id = 1;</textarea>
 				</ul>
 				 
 				<div id="outputTabContent" class="tab-content">
-					<div class="tab-pane" id="home">
-						<table id="outputTable" class="table">
+					<div class="tab-pane" id="home" data-bind="foreach: tables">
+						<table class="table" data-bind="attr : { id: id }">
 					  	</table>
 					</div>
 				</div>
