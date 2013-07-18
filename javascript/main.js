@@ -1,7 +1,101 @@
 /*
 	Created By: Divan Visagie
 */
-require( ['tree' , 'sqlParser'] , function( tree , sqlParser ){
+
+/* Shim for non amd modules */
+requirejs.config({
+    appDir: '.',
+    baseUrl: 'javascript',
+    paths: {
+
+        'jquery': ['jquery.min'],
+        'bootstrap': ['../bootstrap/js/bootstrap.min'],
+        'knockout': ['knockout.min'],
+        'codemirror' : ['../codemirror/lib/codemirror'],
+        'cmjs' : ['../codemirror/mode/javascript/javascript'],
+        'cmsql' : ['../codemirror/mode/sql/sql'],
+        'webdb' : ['../webdb']
+
+    },
+    shim: {
+        /* Set bootstrap dependencies (just jQuery) */
+        'bootstrap' : ['jquery'],
+        'cmjs' : ['codemirror'],
+        'cmsql' : ['codemirror']
+    }
+});
+
+
+require( [
+
+	'tree',
+	'sqlParser',
+	'jquery',
+
+	/* The following dont require variable representatives */
+	'bootstrap',
+	'codemirror',
+	'cmjs',
+	'knockout',
+	'webdb'
+],
+function( tree , sqlParser , $ ){
+
+	/* Table initialization stuff */
+	$('#outputTab a[href="#home"]').tab('show');
+
+	$('#outputTab a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+	});
+
+
+
+	/* Knockout models */
+	function Table( data ){
+
+		var self = this;
+
+		self.Title = data.title || 'Table';
+		self.id = data.id || 'outputTable';
+		self.headings = ko.observableArray( data.headings || [] );
+		self.rows = ko.observableArray( data.rows || [] );
+
+		self.idHash = ko.computed( function(){
+
+			return '#' + this.id;
+		} , this );
+	}
+
+
+	function OutputViewModel(){
+
+		var self = this;
+
+		self.tables = ko.observableArray([
+
+			new Table( {
+				title : 'Output',
+				id : 'outputTable'
+			} )
+		]);
+
+		self.addTable = function( table ){
+
+			self.tables.push( table );
+		};
+
+		self.resetTables = function(){
+
+			self.tables([]);
+		};
+
+	}
+
+	var outputModel = new OutputViewModel();
+	ko.applyBindings( outputModel );
+
+	/* Custom code  */
 
 	var editor = CodeMirror.fromTextArea( document.querySelector( '#code' ), {
 		lineNumbers: true,
