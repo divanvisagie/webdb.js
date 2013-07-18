@@ -52,6 +52,24 @@ function( tree , sqlParser , $ ){
 
 
 	/* Knockout models */
+	function TableRow( data ){
+
+		var self = this;
+
+		self.data = data;
+		self.keys = ko.computed( function(){
+
+			var keyList = Object.keys( data );
+			return keyList;
+		} );
+		self.values = ko.computed( function(){
+
+			return Object.keys( data ).map( function( key ){
+				return data[ key ];
+			} );
+		} ) ;
+	}
+
 	function Table( data ){
 
 		var self = this;
@@ -65,6 +83,17 @@ function( tree , sqlParser , $ ){
 
 			return '#' + this.id;
 		} , this );
+
+		self.test = ko.computed({
+
+			read : function(){ return 'a'; },
+			write : function(a){
+
+				console.log('a' , a );
+				return data.name;
+			},
+			owner : this
+		} );
 	}
 
 
@@ -77,7 +106,8 @@ function( tree , sqlParser , $ ){
 			new Table( {
 				title : 'Output',
 				id : 'outputTable',
-				rows : [{ name:'testname' , detail:'testdetail' }]
+				headings : [ 'name' , 'detail' ],
+				rows : [ new TableRow({ name:'testname' , detail:'testdetail' }) , new TableRow({ name:'testname2' , detail:'testdetail2' }) ]
 			} )
 		]);
 

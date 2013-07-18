@@ -92,12 +92,12 @@ SELECT * FROM test WHERE id = 1;</textarea>
 						<table class="table" data-bind="attr : { id: id }">
 							<thead>
 								<tr data-bind="foreach: headings">
-									<th>a</th>
+									<th data-bind="text:$data">a</th>
 								</tr>
 							</thead>
 							<tbody data-bind="foreach: rows">
-								<tr>
-									<td data-bind="text="></td>
+								<tr data-bind="foreach: values">
+									<td data-bind="text: $data">a</td>
 								</tr>
 							<tbody>
 					  	</table>
