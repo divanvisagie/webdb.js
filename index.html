@@ -11,21 +11,15 @@
 
 		<!-- Bootstrap + font-awesome -->
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<!-- <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
 		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
-		<script src="javascript/jquery.min.js"></script>
 		<script src="javascript/knockout.min.js"></script>
-		<script src="bootstrap/js/bootstrap.js"></script>
 
 		<!-- CodeMirror -->
-		<script src="codemirror/lib/codemirror.js"></script>
 		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
-		<script src="codemirror/mode/javascript/javascript.js"></script>
 		<link rel="stylesheet" href="css/solarized.css"> <!-- Solarized theme -->
 
 		<link href="css/main.css" rel="stylesheet" type="text/css">		
-
 
 		<!-- Stuff for tree views -->
 		<link href="css/tree.css" rel="stylesheet">
@@ -53,9 +47,6 @@
 			</div>
 		</div>
 
-		<!--  -->
-
-
 		<div class="row show-grid hfill">
 			<div id="sidebar" class="side span" >
 
@@ -68,7 +59,6 @@
 								<button class="btn" id="dbRefresh">  <div class="icon-refresh"></div> </button>
 							</div>
 						</div>
-
 					</div>
 				</div>
 
@@ -103,27 +93,11 @@ SELECT * FROM test WHERE id = 1;</textarea>
 					  	</table>
 					</div>
 				</div>
-				 
-				<script>
-
-					$('#outputTab a[href="#home"]').tab('show');
-
-					$('#outputTab a').click(function (e) {
-						e.preventDefault();
-						$(this).tab('show');
-					});
-
-				</script>
 				
 			</div>
 		</div>
 
-		<!-- Bring in scripts -->
-		<!-- <script src="tree.js"></script> -->
-		<script src="webdb.js"></script>
-
 		<!--  require js -->
 		<script data-main="javascript/main" src="javascript/require.js"></script>
-
 	</body>
 </html>

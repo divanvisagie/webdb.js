@@ -5,33 +5,44 @@
 	so far all it needs to do is convert some text in codemirror into some usable commands
 */
 
+if ( !window.hasOwnProperty('define') ){
 
-/*
-	This should determine whether or not a sql string is valid
-*/
-function validate(){
+	window.define = function( name , deps , func ){
 
-	//TODO: make this work
+		if ( !func && typeof deps === 'function' ){
+			func = deps;
+		}
 
-
+		window[ name ] = func();
+	};
 }
 
-/*
-	Takes in a bulk string of sql statements and returns a trimmed array
-*/
-function getLines( sqlString ){
+define( 'sqlParser' , function(){
 
-	var lines = sqlString.split( ';' );
+	/*
+		This should determine whether or not a sql string is valid
+	*/
+	function validate(){
 
-	for ( var i in lines ){
+		//TODO: make this work
 
-		lines[i] = lines[i].trim();
+
 	}
 
-	return lines;
-}
+	/*
+		Takes in a bulk string of sql statements and returns a trimmed array
+	*/
+	return {
+		getLines : function ( sqlString ){
 
-define( 'sqlParser' , {
+			var lines = sqlString.split( ';' );
 
-	getLines : getLines
+			for ( var i in lines ){
+
+				lines[i] = lines[i].trim();
+			}
+
+			return lines;
+		}
+	};
 } );
