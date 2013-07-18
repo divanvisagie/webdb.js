@@ -90,6 +90,16 @@ SELECT * FROM test WHERE id = 1;</textarea>
 				<div id="outputTabContent" class="tab-content">
 					<div class="tab-pane" id="home" data-bind="foreach: tables">
 						<table class="table" data-bind="attr : { id: id }">
+							<thead>
+								<tr data-bind="foreach: headings">
+									<th>a</th>
+								</tr>
+							</thead>
+							<tbody data-bind="foreach: rows">
+								<tr>
+									<td data-bind="text="></td>
+								</tr>
+							<tbody>
 					  	</table>
 					</div>
 				</div>

@@ -76,7 +76,8 @@ function( tree , sqlParser , $ ){
 
 			new Table( {
 				title : 'Output',
-				id : 'outputTable'
+				id : 'outputTable',
+				rows : [{ name:'testname' , detail:'testdetail' }]
 			} )
 		]);
 
