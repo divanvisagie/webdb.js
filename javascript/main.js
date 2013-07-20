@@ -41,14 +41,6 @@ require( [
 ],
 function( tree , sqlParser , $ ){
 
-	/* Table initialization stuff */
-	$('#outputTab a[href="#home"]').tab('show');
-
-	$('#outputTab a').click(function (e) {
-		e.preventDefault();
-		$(this).tab('show');
-	});
-
 
 
 	/* Knockout models */
@@ -74,26 +66,24 @@ function( tree , sqlParser , $ ){
 
 		var self = this;
 
-		self.Title = data.title || 'Table';
+		self.title = data.title || 'Table';
 		self.id = data.id || 'outputTable';
 		self.headings = ko.observableArray( data.headings || [] );
 		self.rows = ko.observableArray( data.rows || [] );
+		self.tabid = data.tabid;
+		self.className = data.className || 'table';
 
 		self.idHash = ko.computed( function(){
 
 			return '#' + this.id;
 		} , this );
 
-		self.test = ko.computed({
+		self.tabidHash = ko.computed( function(){
 
-			read : function(){ return 'a'; },
-			write : function(a){
+			return '#' + self.tabid;
 
-				console.log('a' , a );
-				return data.name;
-			},
-			owner : this
 		} );
+
 	}
 
 
@@ -106,8 +96,9 @@ function( tree , sqlParser , $ ){
 			new Table( {
 				title : 'Output',
 				id : 'outputTable',
-				headings : [ 'name' , 'detail' ],
-				rows : [ new TableRow({ name:'testname' , detail:'testdetail' }) , new TableRow({ name:'testname2' , detail:'testdetail2' }) ]
+				tabid : 'home',
+				headings : [],
+				rows : [ new TableRow({ name:'testname' , detail:'testdetail' }) ]
 			} )
 		]);
 
@@ -280,7 +271,7 @@ function( tree , sqlParser , $ ){
 		}
 	} );
 
-
+	/* TODO: declare this function as a seperate handler */
 	$( '#run' ).on( 'click' , function(){
 
 		$('#outputTab a[href="#home"]').tab('show');
@@ -288,9 +279,12 @@ function( tree , sqlParser , $ ){
 		var codeText = editor.getValue(); /* Get the full code text */
 
 		/* remove all the old stuff */
-		$( '#outputTab' ).html( '<li><a href="#home">Output</a></li>' );
-		$( '#outputTable' ).html( '' );
-		$( '#outputTabContent' ).children( 'div:not(:first)' ).remove(); //removes all except first child
+		// $( '#outputTab' ).html( '<li><a href="#home">Output</a></li>' );
+		// $( '#outputTable' ).html( '' );
+		// $( '#outputTabContent' ).children( 'div:not(:first)' ).remove(); //removes all except first child
+
+		//clear things up
+		outputModel.tables([]);
 
 
 		var lines = sqlParser.getLines( codeText );
@@ -303,28 +297,39 @@ function( tree , sqlParser , $ ){
 			dropped to webdb.js itself 
 		*/
 
+		var outputRows = [];
+
+		function updateRows( data ){
+
+			outputRows.push( data );
+			if ( outputRows.length === lines.length-1 ){
+
+				outputModel.tables.push(
+
+						new Table( {
+							title : 'Output',
+							id : 'outputTable',
+							tabid : 'home',
+							headings : [],
+							rows : outputRows
+						} )
+					);
+
+				alert( 'wow' );
+			}
+		}
+
+
 		var err_handler = function( res ){
 
-			var row = document.createElement( 'tr' );
 			if ( res.hasOwnProperty( 'error' ) ){
 
-				row.className = 'error';
-
-				row.innerHTML += '<td>' + this.query + '</td> <td>'+ res.error.message +'</td>';
-
-				$( '#outputTable' ).append( row );
+				updateRows( new TableRow({ query : this.query , message : res.error.message }) );
 
 				return;
 			}else {
 
-
-				console.log(  'yeah dawg' );
-
-				row.className = 'success';
-
-				row.innerHTML += '<td>' + this.query + '</td> <td>'+ 'Command Executed successfully' +'</td>';
-
-				$( '#outputTable' ).append( row );
+				updateRows( new TableRow({ query : this.query , message : 'Command Executed successfully' }) );
 
 			}
 
@@ -333,47 +338,37 @@ function( tree , sqlParser , $ ){
 
 		var output = [];
 		var count = 0;
+
 		var transaction_handler = function( res ){
 
-			var row = document.createElement( 'tr' );
 			if ( res.hasOwnProperty( 'error' ) ){
 
-				row.className = 'error';
-
-				row.innerHTML += '<td>' + this.query + '</td> <td>'+ res.error.message +'</td>';
-
-				$( '#outputTable' ).append( row );
+				updateRows( new TableRow({ query : this.query , message : res.error.message }) );
 
 				return;
-			}else {
-
-				console.log(  'yeah dawg' );
-
-				row.className = 'success';
-
-				row.innerHTML += '<td>' + this.query + '</td> <td>'+ 'Command Executed successfully' +'</td>';
-
-				$( '#outputTable' ).append( row );
-
+			}
+			else {
+				updateRows( new TableRow({ query : this.query , message : 'Command Executed successfully' }) );
 			}
 
-			output.push( res );
+			var newTableRows = [];
+			for ( var i = 0; i < res.length; i++ ){
 
-			var oElement = $( '#output' );
+				newTableRows.push( new TableRow( res[i] ) );
+			}
 
-			var tbl = tblWithJSONArr( res );
+			var newTbl = new Table( {
+				title : 'Result ' + count,
+				id : 'outputTable' + count,
+				tabid : 'r' + count,
+				headings : Object.keys(res[0]),
+				rows : newTableRows,
+				className : 'table table-bordered'
+			} );
 
+			outputModel.tables.push( newTbl );
 
-			console.log( '____' , count++ );
-
-			var tabs = document.querySelector( '#outputTab' );
-			tabs.innerHTML +=   '<li><a href="#r'+ count +'">Result ' + count + '</a></li>';
-
-			var tabContent = document.querySelector( '#outputTabContent' );
-			tabContent.innerHTML += '<div class="tab-pane" id="r'+ count +'">' + '</div>';
-
-			$( '#r' + count ).append( tbl );
-
+			count++;
 			/* refresher script */
 
 			$('#outputTab a').click(function (e) {
@@ -382,10 +377,10 @@ function( tree , sqlParser , $ ){
 			});
 
 
-			console.log("-->",tbl);
+			//console.log("-->",tbl);
 		};
 
-		for (var k in lines ){
+		for (var k = 0; k < lines.length; k++ ){
 
 			if ( lines[k].toUpperCase().indexOf( 'SELECT' ) > -1 ){ //its probably a select
 
@@ -396,9 +391,20 @@ function( tree , sqlParser , $ ){
 				if( lines[k] === '' ) continue; //skip the blanks
 				webdb.executeTransaction( lines[k] , [] , err_handler.bind( { query : lines[k] } ) );
 			}
+
 		}
 
+		
+		
 
 	} );
+
+	/* Table initialization stuff */
+	$('#outputTab a[href="#home"]').tab('show');
+
+	$('#outputTab a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+	});
 
 } );

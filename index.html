@@ -83,13 +83,13 @@ SELECT * FROM test WHERE id = 1;</textarea>
 
 			<div id="output" class="output span row">
 
-				<ul class="nav nav-tabs" id="outputTab">
-					<li><a href="#home">Output</a></li>
+				<ul class="nav nav-tabs" id="outputTab" data-bind="foreach : tables">
+					<li><a data-bind="text:title, attr : { href : tabidHash }">Output</a></li>
 				</ul>
 				 
-				<div id="outputTabContent" class="tab-content">
-					<div class="tab-pane" id="home" data-bind="foreach: tables">
-						<table class="table" data-bind="attr : { id: id }">
+				<div id="outputTabContent" class="tab-content" data-bind="foreach: tables">
+					<div class="tab-pane" data-bind="attr : { id : tabid }" >
+						<table class="table" data-bind="attr : { id: id , class: className }">
 							<thead>
 								<tr data-bind="foreach: headings">
 									<th data-bind="text:$data">a</th>
