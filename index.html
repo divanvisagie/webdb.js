@@ -7,22 +7,22 @@
 
 		<title>Web SQL Query Browser</title>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 		<!-- Bootstrap + font-awesome -->
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
 
 		<script src="javascript/knockout.min.js"></script>
 
 		<!-- CodeMirror -->
-		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
-		<link rel="stylesheet" href="css/solarized.css"> <!-- Solarized theme -->
+		<link rel="stylesheet" href="codemirror/lib/codemirror.css" />
+		<link rel="stylesheet" href="css/solarized.css" /> <!-- Solarized theme -->
 
-		<link href="css/main.css" rel="stylesheet" type="text/css">		
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
 
 		<!-- Stuff for tree views -->
-		<link href="css/tree.css" rel="stylesheet">
+		<link href="css/tree.css" rel="stylesheet" />
 
 	</head>
 	<body>
@@ -96,7 +96,7 @@ SELECT * FROM test WHERE id = 1;</textarea>
 								</tr>
 							</thead>
 							<tbody data-bind="foreach: rows">
-								<tr data-bind="foreach: values">
+								<tr data-bind="foreach: values , attr : { class : className }">
 									<td data-bind="text: $data">a</td>
 								</tr>
 							<tbody>

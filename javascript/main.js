@@ -21,7 +21,8 @@ requirejs.config({
         /* Set bootstrap dependencies (just jQuery) */
         'bootstrap' : ['jquery'],
         'cmjs' : ['codemirror'],
-        'cmsql' : ['codemirror']
+        'cmsql' : ['codemirror'],
+        'jqscroll' : ['jquery']
     }
 });
 
@@ -41,23 +42,23 @@ require( [
 ],
 function( tree , sqlParser , $ ){
 
-
-
 	/* Knockout models */
 	function TableRow( data ){
 
 		var self = this;
 
-		self.data = data;
+		self.data = data.values;
+		self.className = data.className || '';
+
 		self.keys = ko.computed( function(){
 
-			var keyList = Object.keys( data );
+			var keyList = Object.keys( data.values );
 			return keyList;
 		} );
 		self.values = ko.computed( function(){
 
-			return Object.keys( data ).map( function( key ){
-				return data[ key ];
+			return Object.keys( data.values ).map( function( key ){
+				return data.values[ key ];
 			} );
 		} ) ;
 	}
@@ -98,7 +99,7 @@ function( tree , sqlParser , $ ){
 				id : 'outputTable',
 				tabid : 'home',
 				headings : [],
-				rows : [ new TableRow({ name:'testname' , detail:'testdetail' }) ]
+				rows : []
 			} )
 		]);
 
@@ -302,20 +303,31 @@ function( tree , sqlParser , $ ){
 		function updateRows( data ){
 
 			outputRows.push( data );
-			if ( outputRows.length === lines.length-1 ){
+			/* 
+				if the last line doesnt end with a semicolon then lines array will not have a "" at the end, 
+				hence the terrible inline ternary 
+			*/
+			if ( outputRows.length === (lines[ lines.length-1 ] === '' ? lines.length-1 : lines.length) ){
 
-				outputModel.tables.push(
+				/* we use unshift here to keep output at the beginning of the tab list */
+				outputModel.tables.unshift(
 
-						new Table( {
-							title : 'Output',
-							id : 'outputTable',
-							tabid : 'home',
-							headings : [],
-							rows : outputRows
-						} )
-					);
+					new Table( {
+						title : 'Output',
+						id : 'outputTable',
+						tabid : 'home',
+						headings : [],
+						rows : outputRows
+					} )
+				);
 
-				alert( 'wow' );
+				$('#outputTab a').click(function (e) { //TODO: something needs to be done abot this
+					e.preventDefault();
+					$(this).tab('show');
+				});
+
+				$('#outputTab a[href="#home"]').tab('show');
+
 			}
 		}
 
@@ -324,12 +336,11 @@ function( tree , sqlParser , $ ){
 
 			if ( res.hasOwnProperty( 'error' ) ){
 
-				updateRows( new TableRow({ query : this.query , message : res.error.message }) );
+				updateRows( new TableRow( { values : { query : this.query , message : res.error.message } , className: 'error' }) );
 
-				return;
 			}else {
 
-				updateRows( new TableRow({ query : this.query , message : 'Command Executed successfully' }) );
+				updateRows( new TableRow( { values : { query : this.query , message : 'Command Executed successfully' } , className : 'success' }) );
 
 			}
 
@@ -343,41 +354,39 @@ function( tree , sqlParser , $ ){
 
 			if ( res.hasOwnProperty( 'error' ) ){
 
-				updateRows( new TableRow({ query : this.query , message : res.error.message }) );
+				updateRows( new TableRow( { values : { query : this.query , message : res.error.message } , className:'error' }) );
 
-				return;
 			}
 			else {
-				updateRows( new TableRow({ query : this.query , message : 'Command Executed successfully' }) );
+				count++;
+				updateRows( new TableRow( { values : { query : this.query , message : 'Command Executed successfully' } , className:'success' }) );
+
+				var newTableRows = [];
+				for ( var i = 0; i < res.length; i++ ){
+
+					newTableRows.push( new TableRow( { values : res[i] }) );
+				}
+
+				var newTbl = new Table( {
+					title : 'Result ' + count,
+					id : 'outputTable' + count,
+					tabid : 'r' + count,
+					headings : Object.keys(res[0]),
+					rows : newTableRows,
+					className : 'table table-bordered'
+				} );
+
+				outputModel.tables.push( newTbl );
+
+				/* refresher script */
+
+				$('#outputTab a').click(function (e) {
+					e.preventDefault();
+					$(this).tab('show');
+				});
 			}
 
-			var newTableRows = [];
-			for ( var i = 0; i < res.length; i++ ){
 
-				newTableRows.push( new TableRow( res[i] ) );
-			}
-
-			var newTbl = new Table( {
-				title : 'Result ' + count,
-				id : 'outputTable' + count,
-				tabid : 'r' + count,
-				headings : Object.keys(res[0]),
-				rows : newTableRows,
-				className : 'table table-bordered'
-			} );
-
-			outputModel.tables.push( newTbl );
-
-			count++;
-			/* refresher script */
-
-			$('#outputTab a').click(function (e) {
-				e.preventDefault();
-				$(this).tab('show');
-			});
-
-
-			//console.log("-->",tbl);
 		};
 
 		for (var k = 0; k < lines.length; k++ ){
@@ -394,8 +403,6 @@ function( tree , sqlParser , $ ){
 
 		}
 
-		
-		
 
 	} );
 
