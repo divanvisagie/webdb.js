@@ -129,9 +129,9 @@ webdb.execute = function(sqlString, parameters) {
 
 /* Executes a sql query and prints a relative object */
 webdb.printObjects = function(sqlString, parameters) {
-    
+
     webdb.executeTransaction(sqlString, parameters, function(res) {
-        
+
         for ( var k in res ){
 
             console.log(res[k]);
@@ -147,7 +147,7 @@ webdb.printSchemaObjects = function(){
 
             console.log( resultSet[k] );
         }
-    } )
+    } );
 };
 
 /* Executes a sql query and prints a table with the relavant data */
@@ -165,19 +165,17 @@ webdb.printTable = function(sqlString, parameters) {
             }
         }
         console.log(head);
-        
+
         for (var k in res) { //loop through each result row
-            
+
             var row = "| ";
             for (var field in res[k]) {
-                
+
                 row += res[k][field];
                 row += " | ";
             }
             console.log(row);
             row = "| ";
         }
-    
-    
     });
 };

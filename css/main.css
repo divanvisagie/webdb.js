@@ -83,9 +83,35 @@ width: 100%;
 }
 
 .nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
-color: #555;
-cursor: default;
-background-color: #eee;
-border: 1px solid #ddd;
-border-bottom-color: transparent;
+  color: #555;
+  cursor: default;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
 }
+
+.optcb{
+
+  background: transparent;
+  border: none;
+  color: #aaa;
+  padding: 0;
+  margin-left: 11px;
+  font-size: 18px;
+  margin-top: 0px;
+}
+
+.optcb:hover{
+
+  color: #e99 !important;
+}
+
+.active .optcb{
+
+  color:gray;
+}
+
+.immune .optcb{
+  display: none;
+}
+

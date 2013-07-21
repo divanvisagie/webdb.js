@@ -73,6 +73,7 @@ function( tree , sqlParser , $ ){
 		self.rows = ko.observableArray( data.rows || [] );
 		self.tabid = data.tabid;
 		self.className = data.className || 'table';
+		self.tabClass = data.tabClass || '';
 
 		self.idHash = ko.computed( function(){
 
@@ -84,6 +85,13 @@ function( tree , sqlParser , $ ){
 			return '#' + self.tabid;
 
 		} );
+
+		self.tabDisplay = ko.computed( function(){
+
+			return self.title + ' <span class="icon-remove-sign">close</span>';
+		} );
+
+
 
 	}
 
@@ -99,7 +107,8 @@ function( tree , sqlParser , $ ){
 				id : 'outputTable',
 				tabid : 'home',
 				headings : [],
-				rows : []
+				rows : [],
+				tabClass : 'immune'
 			} )
 		]);
 
@@ -113,10 +122,43 @@ function( tree , sqlParser , $ ){
 			self.tables([]);
 		};
 
+		self.close = function(){
+
+			console.log( 'close args' , arguments , 'this:' , this , 'event' , event );
+		};
+
 	}
 
 	var outputModel = new OutputViewModel();
 	ko.applyBindings( outputModel );
+
+
+	/* Every time tabs are changed some things need to be refreshed */
+	function tabRefresh(){
+
+		$( '.optcb' ).on( 'click' , function( e ){
+
+			console.log( 'should close tab now' , e );
+
+			var targ = $( e.target );
+
+			var tabIndex = $( '#outputTab > li' ).index( targ.parents('li') );
+
+			var hashTag = e.target.parentNode.hash;
+
+			outputModel.tables.remove(function(item) {
+
+				console.log ( item.tabidHash() , '=' , hashTag );
+				return item.tabidHash() === hashTag;
+			});
+
+		} );
+
+		$('#outputTab > li > a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+		});
+	}
 
 	/* Custom code  */
 
@@ -279,11 +321,6 @@ function( tree , sqlParser , $ ){
 
 		var codeText = editor.getValue(); /* Get the full code text */
 
-		/* remove all the old stuff */
-		// $( '#outputTab' ).html( '<li><a href="#home">Output</a></li>' );
-		// $( '#outputTable' ).html( '' );
-		// $( '#outputTabContent' ).children( 'div:not(:first)' ).remove(); //removes all except first child
-
 		//clear things up
 		outputModel.tables([]);
 
@@ -317,14 +354,12 @@ function( tree , sqlParser , $ ){
 						id : 'outputTable',
 						tabid : 'home',
 						headings : [],
-						rows : outputRows
+						rows : outputRows,
+						tabClass : 'immune'
 					} )
 				);
 
-				$('#outputTab a').click(function (e) { //TODO: something needs to be done abot this
-					e.preventDefault();
-					$(this).tab('show');
-				});
+				tabRefresh();
 
 				$('#outputTab a[href="#home"]').tab('show');
 
@@ -380,10 +415,7 @@ function( tree , sqlParser , $ ){
 
 				/* refresher script */
 
-				$('#outputTab a').click(function (e) {
-					e.preventDefault();
-					$(this).tab('show');
-				});
+				tabRefresh();
 			}
 
 
@@ -407,11 +439,8 @@ function( tree , sqlParser , $ ){
 	} );
 
 	/* Table initialization stuff */
-	$('#outputTab a[href="#home"]').tab('show');
+	$('#outputTab > li > a[href="#home"]').tab('show');
 
-	$('#outputTab a').click(function (e) {
-		e.preventDefault();
-		$(this).tab('show');
-	});
+	tabRefresh();
 
 } );
